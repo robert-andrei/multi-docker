@@ -12,5 +12,12 @@ script:
 after_success:
   - docker build -t robertandrei/multi-client ./client
   - docker build -t robertandrei/multi-nginx ./nginx
-  - docker build -t robertandrei/server ./server
-  - docker build -t robertandrei/worker ./worker
+  - docker build -t robertandrei/multi-server ./server
+  - docker build -t robertandrei/multi-worker ./worker
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push robertandrei/multi-client
+  - docker push robertandrei/multi-nginx
+  - docker push robertandrei/multi-server
+  - docker push robertandrei/multi-worker
